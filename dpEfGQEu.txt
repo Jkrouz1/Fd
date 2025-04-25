@@ -1,0 +1,3258 @@
+local Players = game:GetService("Players")
+local module = {}
+
+function module:Fire(key, plr)
+	if key == "febypass" then
+	script.AdminBar:Clone().Parent = Players[plr].PlayerGui
+	
+	local AdminBar		= Players[plr].PlayerGui.AdminBar
+	local Client		= AdminBar.Resources.Client
+	local GUIs			= AdminBar.Resources.GUIs
+	local Admin			= AdminBar.Resources:WaitForChild("Admin")
+	
+	local BarText = ""
+	local LP
+	bans = {}
+	_G.crashbans = {}
+
+	local commands = {}
+	local split = " "
+	
+	function shortName(t)
+		local matches= {}
+    	for _, player in ipairs (Players:GetPlayers()) do
+        	if string.lower(player.Name):match(string.lower(t)) then
+            	table.insert(matches, player)
+        	end
+    	end
+    	if #matches == 1 then
+        	return matches[1]
+    	else
+        	return nil
+    	end
+	end
+	
+	local function addcmd(name, desc, func)
+   	 commands[#commands+1]=
+    	{
+        	NAME	= name;
+        	FUNC	= func;
+			DESC	= desc;
+    	}
+	end
+	
+	addcmd('FF' , "FF (plr) | Gives a Forcefield to (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						Instance.new("ForceField", LP.Character)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								Instance.new("ForceField", v.Character)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Character then
+							Instance.new("ForceField", v.Character)
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+						Instance.new("ForceField", target.Character)
+					end
+				end
+			end
+		end)
+			
+	addcmd('Unff' , "Unff (plr) | Removes the forcefield from (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						LP.Character:FindFirstChildOfClass("ForceField"):Destroy()
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								v.Character:FindFirstChildOfClass("ForceField"):Destroy()
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Character then
+							v.Character:FindFirstChildOfClass("ForceField"):Destroy()
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+						target.Character:FindFirstChildOfClass("ForceField"):Destroy()
+					end
+				end
+			end
+		end)
+	
+	addcmd('Explode' , "Explode (plr) | Explodes (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						Instance.new("Explosion", LP.Character).Position = LP.Character.HumanoidRootPart.Position
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								Instance.new("Explosion", v.Character).Position = v.Character.HumanoidRootPart.Position
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Character then
+							Instance.new("Explosion", v.Character).Position = v.Character.HumanoidRootPart.Position
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+						Instance.new("Explosion", target.Character).Position = target.Character.HumanoidRootPart.Position
+					end
+				end
+			end
+	end)
+	
+	addcmd('Kill' , "Kill (plr) | Kills (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						LP.Character:BreakJoints()
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								v.Character:BreakJoints()
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Character then
+							v.Character:BreakJoints()
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+						target.Character:BreakJoints()
+					end
+				end
+			end
+		end)
+	
+	addcmd('Fling' , "Fling (plr) | Flings (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character  and LP.Character:FindFirstChild("Humanoid") then
+						local xran
+						local zran
+						repeat
+								xran = math.random(-9999, 9999)
+						until math.abs(xran) >= 5555
+						repeat
+								zran = math.random(-9999, 9999)
+						until math.abs(zran) >= 5555
+						LP.Character.Humanoid.Sit = true
+						LP.Character.HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
+						local BF = Instance.new("BodyForce", LP.Character.HumanoidRootPart)
+						BF.Force = Vector3.new(xran*4, 9999*5, zran*4)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+					if v.Character  and v.Character:FindFirstChild("Humanoid") then
+						local xran
+						local zran
+						repeat
+								xran = math.random(-9999, 9999)
+						until math.abs(xran) >= 5555
+						repeat
+								zran = math.random(-9999, 9999)
+						until math.abs(zran) >= 5555
+						v.Character.Humanoid.Sit = true
+						v.Character.HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
+						local BF = Instance.new("BodyForce", v.Character.HumanoidRootPart)
+						BF.Force = Vector3.new(xran*4, 9999*5, zran*4)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+					if v.Character  and v.Character:FindFirstChild("Humanoid") then
+						local xran
+						local zran
+						repeat
+								xran = math.random(-9999, 9999)
+						until math.abs(xran) >= 5555
+						repeat
+								zran = math.random(-9999, 9999)
+						until math.abs(zran) >= 5555
+						v.Character.Humanoid.Sit = true
+						v.Character.HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
+						local BF = Instance.new("BodyForce", v.Character.HumanoidRootPart)
+						BF.Force = Vector3.new(xran*4, 9999*5, zran*4)
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character  and target.Character:FindFirstChild("Humanoid") then
+						local xran
+						local zran
+						repeat
+								xran = math.random(-9999, 9999)
+						until math.abs(xran) >= 5555
+						repeat
+								zran = math.random(-9999, 9999)
+						until math.abs(zran) >= 5555
+						target.Character.Humanoid.Sit = true
+						target.Character.HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
+						local BF = Instance.new("BodyForce", target.Character.HumanoidRootPart)
+						BF.Force = Vector3.new(xran*4, 9999*5, zran*4)
+					end
+				end
+			end
+		end)	
+	
+	addcmd('Freeze' , "Freeze (plr) | Freezes (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character  and LP.Character:FindFirstChild("Head") then
+						LP.Character.Head.Anchored = true
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character  and v.Character:FindFirstChild("Head") then
+								v.Character.Head.Anchored = true
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character and v.Character:FindFirstChild("Head") then
+								v.Character.Head.Anchored = true
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character  and target.Character:FindFirstChild("Head") then
+					target.Character.Head.Anchored = true
+				end
+			end
+		end)			
+	
+	addcmd('Thaw' , "Thaw (plr) | Unfreezes (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character  and LP.Character:FindFirstChild("Head") then
+						LP.Character.Head.Anchored = false
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character  and v.Character:FindFirstChild("Head") then
+								v.Character.Head.Anchored = false
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character and v.Character:FindFirstChild("Head") then
+								v.Character.Head.Anchored = false
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character  and target.Character:FindFirstChild("Head") then
+					target.Character.Head.Anchored = false
+				end
+			end
+		end)
+	
+	addcmd('Respawn' , "Respawn (plr) | Respawns (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						LP:LoadCharacter()
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								v:LoadCharacter()
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								v:LoadCharacter()
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					target:LoadCharacter()
+				end
+			end
+		end)
+	
+	addcmd('Fire' , "Fire (plr) | Set (plr) on Fire",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						Instance.new("Fire", LP.Character.Head)
+						Instance.new("Fire", LP.Character.HumanoidRootPart)
+						Instance.new("Fire", LP.Character["Left Arm"])
+						Instance.new("Fire", LP.Character["Left Leg"])
+						Instance.new("Fire", LP.Character["Right Arm"])
+						Instance.new("Fire", LP.Character["Right Leg"])
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								Instance.new("Fire", v.Character.Head)
+								Instance.new("Fire", v.Character.HumanoidRootPart)
+								Instance.new("Fire", v.Character["Left Arm"])
+								Instance.new("Fire", v.Character["Left Leg"])
+								Instance.new("Fire", v.Character["Right Arm"])
+								Instance.new("Fire", v.Character["Right Leg"])
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								Instance.new("Fire", v.Character.Head)
+								Instance.new("Fire", v.Character.HumanoidRootPart)
+								Instance.new("Fire", v.Character["Left Arm"])
+								Instance.new("Fire", v.Character["Left Leg"])
+								Instance.new("Fire", v.Character["Right Arm"])
+								Instance.new("Fire", v.Character["Right Leg"])
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					Instance.new("Fire", target.Character.Head)
+					Instance.new("Fire", target.Character.HumanoidRootPart)
+					Instance.new("Fire", target.Character["Left Arm"])
+					Instance.new("Fire", target.Character["Left Leg"])
+					Instance.new("Fire", target.Character["Right Arm"])
+					Instance.new("Fire", target.Character["Right Leg"])
+				end
+			end
+		end)
+	
+	addcmd('Unfire' , "Unfire (plr) | Extinguish (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						for idx, val in pairs(LP.Character:GetDescendants()) do
+							if (val:IsA("Fire")) then
+								val:Destroy()
+							end
+						end
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								for idx, val in pairs(v.Character:GetDescendants()) do
+									if (val:IsA("Fire")) then
+										val:Destroy()
+									end
+								end
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								for idx, val in pairs(v.Character:GetDescendants()) do
+									if (val:IsA("Fire")) then
+										val:Destroy()
+									end
+								end
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					for idx, val in pairs(target.Character:GetDescendants()) do
+						if (val:IsA("Fire")) then
+							val:Destroy()
+						end
+					end
+				end
+			end
+		end)
+	
+	addcmd('God' , "God (plr) | Makes (plr) Invincible",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						LP.Character.Humanoid.Health = math.huge
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								v.Character.Humanoid.Health = math.huge
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								v.Character.Humanoid.Health = math.huge
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					target.Character.Humanoid.Health = math.huge
+				end
+			end
+		end)
+	
+	addcmd('Heal' , "Heal (plr) | Heals (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						LP.Character.Humanoid.Health = 100
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								v.Character.Humanoid.Health = 100
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								v.Character.Humanoid.Health = 100
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					target.Character.Humanoid.Health = 100
+				end
+			end
+		end)
+	
+	addcmd('Jump' , "Jump (plr) | Makes (plr) Jump",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						LP.Character.Humanoid.Jump = true
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								v.Character.Humanoid.Jump = true
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								v.Character.Humanoid.Jump = true
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					target.Character.Humanoid.Jump = true
+				end
+			end
+		end)
+	
+	addcmd('Sit' , "Sit (plr) | Makes (plr) Sit",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						LP.Character.Humanoid.Sit = true
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								v.Character.Humanoid.Sit = true
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								v.Character.Humanoid.Sit = true
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					target.Character.Humanoid.Sit = true
+				end
+			end
+		end)
+	
+	addcmd('Nil' , "Nil (plr) | Removes (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						LP.Character:Destroy()
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								v.Character:Destroy()
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								v.Character:Destroy()
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					target.Character:Destroy()
+				end
+			end
+		end)
+	
+	addcmd('Naked' , "Naked (plr) | Strips (plr) off of Clothes",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						for idx, val in pairs(LP.Character:GetChildren()) do
+							if (val:IsA("Shirt") or val:IsA("Pants") or val:IsA("ShirtGraphic")) then
+								val:Destroy()
+							end
+						end
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								for idx, val in pairs(v.Character:GetChildren()) do
+									if (val:IsA("Shirt") or val:IsA("Pants") or val:IsA("ShirtGraphic")) then
+										val:Destroy()
+									end
+								end
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								for idx, val in pairs(v.Character:GetChildren()) do
+									if (val:IsA("Shirt") or val:IsA("Pants") or val:IsA("ShirtGraphic")) then
+										val:Destroy()
+									end
+								end
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					for idx, val in pairs(target.Character:GetChildren()) do
+						if (val:IsA("Shirt") or val:IsA("Pants") or val:IsA("ShirtGraphic")) then
+							val:Destroy()
+						end
+					end
+				end
+			end
+		end)
+	
+	addcmd('Bring' , "Bring (plr) | Brings (plr) to you",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								Players[v.Name].Character.HumanoidRootPart.CFrame = LP.Character.HumanoidRootPart.CFrame
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								Players[v.Name].Character.HumanoidRootPart.CFrame = LP.Character.HumanoidRootPart.CFrame
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					Players[target.Name].Character.HumanoidRootPart.CFrame = LP.Character.HumanoidRootPart.CFrame
+				end
+			end
+		end)
+	
+	addcmd('Goto' , "Goto (plr) | Brings you to (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								LP.Character.HumanoidRootPart.CFrame = Players[v.Name].Character.HumanoidRootPart.CFrame 
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								LP.Character.HumanoidRootPart.CFrame = Players[v.Name].Character.HumanoidRootPart.CFrame
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					LP.Character.HumanoidRootPart.CFrame = Players[target.Name].Character.HumanoidRootPart.CFrame
+				end
+			end
+		end)
+	
+	addcmd('Cripple' , "Cripple (plr) | Cripples (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						LP.Character.Humanoid.PlatformStand = true
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								v.Character.Humanoid.PlatformStand = true
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								v.Character.Humanoid.PlatformStand = true
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					target.Character.Humanoid.PlatformStand = true
+				end
+			end
+		end)
+	
+	addcmd('Uncripple' , "Uncripple (plr) | Uncripples (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						LP.Character.Humanoid.PlatformStand = false
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								v.Character.Humanoid.PlatformStand = false
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								v.Character.Humanoid.PlatformStand = false
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					target.Character.Humanoid.PlatformStand = false
+				end
+			end
+		end)
+	
+	addcmd('Blind' , "Blind (plr) | Makes (plr) Blind",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						local GUI = GUIs.Blind:Clone()
+						GUI.Parent = LP.PlayerGui
+						GUI.Enabled = true
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								local GUI = GUIs.Blind:Clone()
+								GUI.Parent = v.PlayerGui
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								local GUI = GUIs.Blind:Clone()
+								GUI.Parent = v.PlayerGui
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					local GUI = GUIs.Blind:Clone()
+					GUI.Parent = target.PlayerGui
+				end
+			end
+		end)
+			
+	addcmd('Unblind' , "Unblind (plr) | Makes (plr) not Blind",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						local C = Client.Unblind:Clone()
+						C.Parent = LP.PlayerGui
+						C.Disabled = false
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								local C = Client.Unblind:Clone()
+								C.Parent = v.PlayerGui
+								C.Disabled = false
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								local C = Client.Unblind:Clone()
+								C.Parent = v.PlayerGui
+								C.Disabled = false
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					local C = Client.Unblind:Clone()
+					C.Parent = target.PlayerGui
+					C.Disabled = false
+				end
+			end
+		end)
+		
+	addcmd('Blur' , "Blur (plr) | Makes (plr) Blurred",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						local C = Client.Blur:Clone()
+						C.Parent = LP.PlayerGui
+						C.Disabled = false
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								local C = Client.Blur:Clone()
+								C.Parent = v.PlayerGui
+								C.Disabled = false
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								local C = Client.Blur:Clone()
+								C.Parent = v.PlayerGui
+								C.Disabled = false
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					local C = Client.Blur:Clone()
+					C.Parent = target.PlayerGui
+					C.Disabled = false
+				end
+			end
+		end)
+		
+	addcmd('Unblur' , "Unblur (plr) | Unblurs (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						local C = Client.Unblur:Clone()
+						C.Parent = LP.PlayerGui
+						C.Disabled = false
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								local C = Client.Unblur:Clone()
+								C.Parent = v.PlayerGui
+								C.Disabled = false
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								local C = Client.Unblur:Clone()
+								C.Parent = v.PlayerGui
+								C.Disabled = false
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					local C = Client.Unblur:Clone()
+					C.Parent = target.PlayerGui
+					C.Disabled = false
+				end
+			end
+		end)
+	
+	addcmd('Float' , "Float (plr) | Makes (plr) Float",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						local C = Client.Float:Clone()
+						C.Parent = LP.Character
+						C.Disabled = false
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								local C = Client.Float:Clone()
+								C.Parent = v.Character
+								C.Disabled = false
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								local C = Client.Float:Clone()
+								C.Parent = v.Character
+								C.Disabled = false
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					local C = Client.Float:Clone()
+					C.Parent = target.Character
+					C.Disabled = false
+				end
+			end
+		end)
+	
+	addcmd('Unfloat' , "Unfloat (plr) | Makes (plr) Unfloat",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						local C = Client.Unfloat:Clone()
+						C.Parent = LP.Character
+						C.Disabled = false
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								local C = Client.Unfloat:Clone()
+								C.Parent = v.Character
+								C.Disabled = false
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								local C = Client.Unfloat:Clone()
+								C.Parent = v.Character
+								C.Disabled = false
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					local C = Client.Unfloat:Clone()
+					C.Parent = target.Character
+					C.Disabled = false
+				end
+			end
+		end)
+	
+	addcmd('Mute' , "Mute (plr) | Makes (plr) Muted",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						local C = Client.Mute:Clone()
+						C.Parent = LP.Backpack
+						C.Disabled = false
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								local C = Client.Mute:Clone()
+								C.Parent = v.Backpack
+								C.Disabled = false
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								local C = Client.Mute:Clone()
+								C.Parent = v.Backpack
+								C.Disabled = false
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					local C = Client.Mute:Clone()
+					C.Parent = target.Backpack
+					C.Disabled = false
+				end
+			end
+		end)
+	
+	addcmd('UnMute' , "UnMute (plr) | Makes (plr) UnMuted",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						local C = Client.UnMute:Clone()
+						C.Parent = LP.Backpack
+						C.Disabled = false
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								local C = Client.UnMute:Clone()
+								C.Parent = v.Backpack
+								C.Disabled = false
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								local C = Client.UnMute:Clone()
+								C.Parent = v.Backpack
+								C.Disabled = false
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					local C = Client.UnMute:Clone()
+					C.Parent = target.Backpack
+					C.Disabled = false
+				end
+			end
+		end)
+	
+	addcmd('Crash' , "Crash (plr) | Crashes (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						local C = Client.Crash:Clone()
+						C.Parent = LP.Backpack
+						C.Disabled = false
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								local C = Client.Crash:Clone()
+								C.Parent = v.Backpack
+								C.Disabled = false
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								local C = Client.Crash:Clone()
+								C.Parent = v.Backpack
+								C.Disabled = false
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					local C = Client.Crash:Clone()
+					C.Parent = target.Backpack
+					C.Disabled = false
+				end
+			end
+		end)
+	
+	addcmd('CMDS' , "CMDS | Loads a list of commands",
+		function(args)
+			local GUI = GUIs.Commands:Clone()
+			GUI.Parent = LP.PlayerGui
+			GUI.Frame.LocalScript.Disabled = false
+		end)
+	
+	addcmd('SM' , "SM (str) | System Message saying (str)",
+		function(args)
+			local t = args[2]
+			local s = string.sub(BarText, 3)
+			if not t then
+				return
+			else
+				pcall(function()
+					for index, value in pairs(game:GetService("Players"):GetPlayers()) do
+						local G = GUIs.ServerMessage:Clone()
+						G.Parent = value.PlayerGui
+						G.Message.Value = s
+						G.Frame.LocalScript.Disabled = false
+					end
+				end)
+			end
+		end)
+	
+	addcmd('H' , "H (str) | Hint message saying (str)",
+		function(args)
+			local t = args[2]
+			local s = string.sub(BarText, 3)
+			if not t then
+				return
+			else
+				pcall(function()
+					for index, value in pairs(game:GetService("Players"):GetPlayers()) do
+						local G = GUIs.Hint:Clone()
+						G.Parent = value.PlayerGui
+						G.Message.Value = s
+						G.Frame.LocalScript.Disabled = false
+					end
+				end)
+			end
+		end)
+	
+	addcmd('Fly' , "Fly (plr) | Flies (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						if LP.Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
+							local P = LP.Character.HumanoidRootPart.CFrame
+							require(2699298287).load(LP.Name)
+							repeat wait() until LP.Character
+							LP.Character.HumanoidRootPart.CFrame = P
+						end
+						local C = Client.Fly:Clone()
+						local G = GUIs.Hint:Clone()
+						C.Parent = LP.Backpack
+						C.Disabled = false
+						G.Parent = LP.PlayerGui
+						G.Message.Value = 'To unfly, Press "E"'
+						G.Frame.LocalScript.Disabled = false
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								if v.Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
+									local P = v.Character.HumanoidRootPart.CFrame
+									require(2699298287).load(v.Name)
+									repeat wait() until v.Character
+									v.Character.HumanoidRootPart.CFrame = P
+								end
+								local C = Client.Fly:Clone()
+								local G = GUIs.Hint:Clone()
+								C.Parent = v.Backpack
+								C.Disabled = false
+								G.Parent = v.PlayerGui
+								G.Message.Value = 'To unfly, Press "E"'
+								G.Frame.LocalScript.Disabled = false
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								if v.Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
+									local P = v.Character.HumanoidRootPart.CFrame
+									require(2699298287).load(v.Name)
+									repeat wait() until v.Character
+									v.Character.HumanoidRootPart.CFrame = P
+								end
+								local C = Client.Fly:Clone()
+								local G = GUIs.Hint:Clone()
+								C.Parent = v.Backpack
+								C.Disabled = false
+								G.Parent = v.PlayerGui
+								G.Message.Value = 'To unfly, Press "E"'
+								G.Frame.LocalScript.Disabled = false
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if LP.Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
+						local P = target.Character.HumanoidRootPart.CFrame
+						require(2699298287).load(target.Name)
+						repeat wait() until target.Character
+						target.Character.HumanoidRootPart.CFrame = P
+					end
+					if target.Character then
+					local C = Client.Fly:Clone()
+					local G = GUIs.Hint:Clone()
+					C.Parent = target.Backpack
+					C.Disabled = false
+					G.Parent = target.PlayerGui
+					G.Message.Value = 'To unfly, Press "E"'
+					G.Frame.LocalScript.Disabled = false
+				end
+			end
+		end)
+	
+	addcmd('Kick' , "Kick (plr) (str) | Kicks (plr) for (str)",
+		function(args)
+			local t = args[2]
+			local s = string.sub(BarText, 6 + string.len(t))
+			if not t or not s then
+				return
+			else
+				if string.lower(t) == 'me' and not s then
+					if LP.Character then
+						LP:Kick("You have been kicked. You can rejoin.")
+					end
+				elseif string.lower(t) == 'me' and s then
+					if LP.Character then
+						LP:Kick(s)
+					end	
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' and not s then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								v:Kick("You have been kicked. You can rejoin.")
+							end
+						end
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' and s then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								v:Kick(s)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' and not s then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Character then
+							v:Kick("You have been kicked. You can rejoin.")
+						end
+					end
+				elseif string.lower(t) == 'all' and s then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								v:Kick(s)
+							end
+						end
+					end
+				end
+				local target = shortName(t)
+				if target ~= nil and not s then
+					if target.Character then
+					target:Kick("You have been kicked. You can rejoin.")
+				end
+			end
+			local target = shortName(t)
+				if target ~= nil and s then
+					if target.Character then
+					target:Kick(s)
+				end
+			end
+		end)
+	
+	addcmd('Ban' , "Ban (plr) (str) | Bans (plr) for (str)",
+		function(args)
+			local t = args[2]
+			local s = string.sub(BarText, 6 + string.len(t))
+			if not t or not s then
+				return
+			else
+				if string.lower(t) == 'me' and not s then
+					if LP.Character then
+						table.insert(bans, LP.Name)
+						LP:Kick("You have been banned from the server.")
+					end
+				elseif string.lower(t) == 'me' and s then
+					if LP.Character then
+						table.insert(bans, LP.Name)
+						LP:Kick(s)
+					end	
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' and not s then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								table.insert(bans, v.Name)
+								v:Kick("You have been banned from the server.")
+							end
+						end
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' and s then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								table.insert(bans, v.Name)
+								v:Kick(s)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' and not s then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Character then
+							table.insert(bans, v.Name)
+							v:Kick("You have been banned from the server.")
+						end
+					end
+				elseif string.lower(t) == 'all' and s then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								table.insert(bans, v.Name)
+								v:Kick(s)
+							end
+						end
+					end
+				end
+				local target = shortName(t)
+				if target ~= nil and not s then
+					if target.Character then
+						table.insert(bans, target.Name)
+						target:Kick("You have been banned from the server.")
+				end
+			end
+			local target = shortName(t)
+				if target ~= nil and s then
+					if target.Character then
+						table.insert(bans, target.Name)
+						target:Kick(s)
+					end
+				end
+			end)
+			addcmd('Crashban' , "Crashban (plr) (str) | Crashbans (plr) for (str)",
+		function(args)
+			local t = args[2]
+			local s = string.sub(BarText, 6 + string.len(t))
+			if not t or not s then
+				return
+			else
+				if string.lower(t) == 'me' and not s then
+					if LP.Character then
+						table.insert(_G.crashbans, LP.Name)
+						LP:Kick("You have been banned from the server.")
+					end
+				elseif string.lower(t) == 'me' and s then
+					if LP.Character then
+						table.insert(_G.crashbans, LP.Name)
+						LP:Kick(s)
+					end	
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' and not s then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								table.insert(_G.crashbans, v.Name)
+
+								script.crash:Clone().Parent = v.Character
+															v:Kick(s)
+
+							end
+						end
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' and s then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								table.insert(_G.crashbans, v.Name)
+								script.crash:Clone().Parent = v.Character
+
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' and not s then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Character then
+								table.insert(_G.crashbans, v.Name)
+															script.crash:Clone().Parent = v.Character
+															v:Kick(s)
+
+
+						end
+					end
+				elseif string.lower(t) == 'all' and s then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								table.insert(_G.crashbans, v.Name)
+								
+																							script.crash:Clone().Parent = v.Character
+															v:Kick(s)
+
+
+							end
+						end
+					end
+				end
+				local target = shortName(t)
+				if target ~= nil and not s then
+					if target.Character then
+															target:Kick(s)
+															table.insert(_G.crashbans,target.Name)
+																							script.crash:Clone().Parent = target.Character
+
+				end
+			end
+			local target = shortName(t)
+				if target ~= nil and s then
+					if target.Character then
+						table.insert(_G.crashbans, target.Name)
+						target:Kick(s)
+					end
+				end
+			end)
+		
+	addcmd('Damage' , "Damage (plr) (int) | Gives (plr) (int) damage",
+		function(args)
+			local t = args[2]
+			local i = args[3]
+			if not t and not i then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						LP.Character.Humanoid.Health = LP.Character.Humanoid.Health - i
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								v.Character.Humanoid.Health = v.Character.Humanoid.Health - i
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								v.Character.Humanoid.Health = v.Character.Humanoid.Health - i
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					target.Character.Humanoid.Health = target.Character.Humanoid.Health - i
+				end
+			end
+		end)
+			
+	addcmd('Shutdown' , "Shutdown | Shuts the game down",
+		function(args)
+			for _,v in pairs(game:GetService("Players"):GetPlayers()) do
+				v:Kick("Developer has shutdown the game for server maintenance.")
+			end
+	end)
+	addcmd('Assets' , "Assets | Reparents the Assets Folder",
+		function(args)
+			script.Assets:Clone().Parent = game.ReplicatedStorage
+		end)
+	
+			addcmd('Executor' , "Executor (me) | Loads (me) a Executor",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(3036801286).Pristh(LP.Name,"execuuuutor")
+					end
+				end
+			end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(3036801286).Pristh(target.Name,"execuuuutor")
+				end
+			end
+			end)
+
+		addcmd('Rapier' , "Rapier (plr) | Loads Rapier on (plr) ",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("Rapier").load("Pristh_Script",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("Rapier").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("Rapier").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("Rapier").load("Pristh_Script",target.Name)
+				end
+			end
+		end)
+		
+	addcmd('Chathax' , "Chathax (plr) | Loads Chat Hax on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(3067627498).load(LP.Name,"fatkidsinabowlok!")
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(3067627498).load(v.Name,"fatkidsinabowlok!")
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(3067627498).load(v.Name,"fatkidsinabowlok!")
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(3067627498).load(target.Name,"fatkidsinabowlok!")
+				end
+			end
+		end)
+
+		addcmd('Aprins' , "Aprins (plr) | Loads Aprins on (plr) ",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("Aprins").load("Pristh_Script",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("Aprins").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("Aprins").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("Aprins").load("Pristh_Script",target.Name)
+				end
+			end
+		end)
+		
+		addcmd('BladeMagican' , "BladeMagican (plr) | Loads Blade Magican on (plr) ",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("BladeMagican").load("Pristh_Script",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("BladeMagican").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("BladeMagican").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("BladeMagican").load("Pristh_Script",target.Name)
+				end
+			end
+		end)
+		
+		addcmd('Death' , "Death (plr) | Loads Death on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(3042100250).run(LP.Name, "_")
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(3042100250).run(v.Name, "_")
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(3042100250).run(v.Name, "_")
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(3042100250).run(target.Name, "_")
+				end
+			end
+		end)
+		
+		addcmd('Dex' , "Dex (plr) | Loads Dex Explorer on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2965514649):fireplace(LP.Name, "dwexisnice")
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2965514649):fireplace(v.Name, "dwexisnice")
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2965514649):fireplace(v.Name, "dwexisnice")
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2965514649):fireplace(target.Name, "dwexisnice")
+				end
+			end
+		end)
+		
+		addcmd('Shadowmax' , "Shadowmax (plr) | Loads Shadowmax on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2985320282).run(LP.Name, "batman")
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2985320282).run(v.Name, "batman")
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2985320282).run(v.Name, "batman")
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2985320282).run(target.Name, "batman")
+				end
+			end
+		end)
+		
+		addcmd('EtheralGlitcher' , "EtheralGlitcher (plr) | Loads Etheral Glitcher on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(3042161846).run(LP.Name, "_")
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(3042161846).run(v.Name, "_")
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(3042161846).run(v.Name, "_")
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(3042161846).run(target.Name, "_")
+				end
+			end
+		end)
+		
+		addcmd('TerraGod' , "TerraGod (plr) | Loads Terra God on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(3047774386).run(LP.Name, "_")
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(3047774386).run(v.Name, "_")
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(3047774386).run(v.Name, "_")
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(3047774386).run(target.Name, "_")
+				end
+			end
+		end)
+		
+		addcmd('Horseman' , "Horseman (plr) | Loads Horseman on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(3042063742).run(LP.Name, "_")
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(3042063742).run(v.Name, "_")
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(3042063742).run(v.Name, "_")
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(3042063742).run(target.Name, "_")
+				end
+			end
+		end)
+		
+		addcmd('Calamity' , "Calamity (plr) | Loads Calamity on (plr) ",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("Calamity").load("Pristh_Script",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("Calamity").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("Calamity").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("Calamity").load("Pristh_Script",target.Name)
+				end
+			end
+		end)
+
+		addcmd('MrByeBye' , "MrByeBye (plr) | Loads MrByeBye on (plr) ",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("mrbyebye").load("Pristh_Script",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("mrbyebye").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("mrbyebye").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("mrbyebye").load("Pristh_Script",target.Name)
+				end
+			end
+		end)
+
+		addcmd('KitchenGun' , "KitchenGun (plr) | Gives (plr) a Kitchen Gun",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2949859561):Fire("ok",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2949859561):Fire("ok",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2949859561):Fire("ok",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2949859561):Fire("ok",target.Name)
+				end
+			end
+		end)
+
+	
+		addcmd('GKV4' , "GKV4 (plr) | Gives (plr) Grab Knife V4",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2949860166):Fire("ok",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2949860166):Fire("ok",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2949860166):Fire("ok",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2949860166):Fire("ok",target.Name)
+				end
+			end
+		end)
+	
+		addcmd('IRON' , "IRON (plr) | Gives (plr) The I.R.O.N Sword",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2949860816):Fire("ok",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2949860816):Fire("ok",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2949860816):Fire("ok",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2949860816):Fire("ok",target.Name)
+				end
+			end
+		end)
+		
+		addcmd('Topk3k' , "Topk3k (plr) | Loads Topk3k on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(3057907773).Pristhkek(LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(3057907773).Pristhkek(v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(3057907773).Pristhkek(v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(3057907773).Pristhkek(target.Name)
+				end
+			end
+		end)
+		
+		addcmd('LustrisSword' , "LustrisSword (plr) | Loads Lustris Sword on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2949861673):Fire("ok",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2949861673):Fire("ok",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2949861673):Fire("ok",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2949861673):Fire("ok",target.Name)
+				end
+			end
+		end)
+		
+		addcmd('Prism' , "Prism (plr) | Loads Prism on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2949862462):Fire("ok",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2949862462):Fire("ok",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2949862462):Fire("ok",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2949862462):Fire("ok",target.Name)
+				end
+			end
+		end)
+	
+		addcmd('RuinEx' , "RuinEx (plr) | Transforms (plr) into RuinEx",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2949864470):Fire("ok",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2949864470):Fire("ok",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2949864470):Fire("ok",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2949864470):Fire("ok",target.Name)
+				end
+			end
+		end)
+	
+	addcmd('Chill' , "Chill (plr) | Gives all (plr) a chill face",
+		function(args)
+			require(2927166850).chill("omg so chill")
+	end)
+	
+		addcmd('GaleFighter' , "GaleFighter (plr) | Transforms (plr) into a fighter",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927179221):Fire(LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927179221):Fire(v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927179221):Fire(v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927179221):Fire(target.Name)
+				end
+			end
+		end)
+	
+		addcmd('Psychosider' , "Psychosider (plr) | Loads Psychosider on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2926743217):Fire("Pristh",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2926743217):Fire("Pristh",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2926743217):Fire("Pristh",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2926743217):Fire("Pristh",target.Name)
+				end
+			end
+		end)
+		
+
+	
+	addcmd('Van' , "Van (plr) | Kidnaps (plr) with a Candy Van",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("Clown").load("Pristh_Script", LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("Clown").load("Pristh_Script", v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("Clown").load("Pristh_Script", v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("Clown").load("Pristh_Script", target.Name)
+				end
+			end
+	end)
+	
+	addcmd('Cop' , "Cop (plr) | Loads cop on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("ScriptCop").load("Pristh_Script", LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("ScriptCop").load("Pristh_Script", v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("ScriptCop").load("Pristh_Script", v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("ScriptCop").load("Pristh_Script", target.Name)
+				end
+			end
+	end)
+	
+	addcmd('Scavengerhands' , "ScavengerHands (plr) | Loads Scavenger Hands on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("ScavengerHands").load("Pristh_Script", LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("ScavengerHands").load("Pristh_Script", v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("ScavengerHands").load("Pristh_Script", v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("ScavengerHands").load("Pristh_Script", target.Name)
+				end
+			end
+	end)
+	
+	addcmd('WarPhoenix' , "WarPhoenix (plr) | Loads War Phoenix on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2987724256).run(LP.Name, "war")
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2987724256).run(v.Name, "war")
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2987724256).run(v.Name, "war")
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2987724256).run(target.Name, "war")
+				end
+			end
+	end)
+	
+	addcmd('NeptunianV' , "NeptunianV (plr) | Gives (plr) the Neptunian V Sword",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("NeptunianV").load("Pristh_Script",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("NeptunianV").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("NeptunianV").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("NeptunianV").load("Pristh_Script",target.Name)
+				end
+			end
+	end)
+	
+	addcmd('NeptunianEdit' , "NeptunianEdit (plr) | Gives (plr) the Neptunian V Sword",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("NeptunianvEdit").load("Pristh_Script",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("NeptunianvEdit").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("NeptunianvEdit").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("NeptunianvEdit").load("Pristh_Script",target.Name)
+				end
+			end
+	end)
+	
+	addcmd('ZenithRifle' , "ZenithRifle (plr) | Loads Zenith Rifle on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("ZenithRifle").load("Pristh_Script",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("ZenithRifle").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("ZenithRifle").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("ZenithRifle").load("Pristh_Script",target.Name)
+				end
+			end
+	end)
+	
+	addcmd('Pan' , "Pan (plr) | Gives (plr) a ragdoll pan",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2903639461).load(LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2903639461).load(v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2903639461).load(v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2903639461).load(target.Name)
+				end
+			end
+		end)
+	
+	addcmd('Void' , "Void (plr) | Loads Void on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2972096782).run(LP.Name, "voidlookshot")
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2972096782).run(v.Name, "voidlookshot")
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2972096782).run(v.Name, "voidlookshot")
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2972096782).run(target.Name, "voidlookshot")
+				end
+			end
+		end)
+	
+	addcmd('Eon' , "Eon (plr) | Loads Eon on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2972183411).run(LP.Name, "eonlooksnice")
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2972183411).run(v.Name, "eonlooksnice")
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2972183411).run(v.Name, "eonlooksnice")
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2972183411).run(target.Name, "eonlooksnice")
+				end
+			end
+		end)
+	
+	addcmd('Outcast' , "Outcast (plr) | Loads Outcast on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2970875041):Outcast(LP.Name, "outcastisop")
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2970875041):Outcast(v.Name, "outcastisop")
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2970875041):Outcast(v.Name, "outcastisop")
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2970875041):Outcast(target.Name, "outcastisop")
+				end
+			end
+		end)
+	
+	addcmd('SSA' , "SSA (plr) | Gives (plr) an Exe/Logger",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2975516313).skid(LP.Name, "1273, down the rockerfellerstreet")
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2975516313).skid(v.Name, "1273, down the rockerfellerstreet")
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2975516313).skid(v.Name, "1273, down the rockerfellerstreet")
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2975516313).skid(target.Name, "1273, down the rockerfellerstreet")
+				end
+			end
+		end)
+	
+	addcmd('Atlas' , "Atlas (plr) | Loads Atlas | Load assets first",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(3039578829):Inject(LP.Name, "1XZ8YWN27NZ0282N10A0181MSW_")
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(3039578829):Inject(v.Name, "1XZ8YWN27NZ0282N10A0181MSW_")
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(3039578829):Inject(v.Name, "1XZ8YWN27NZ0282N10A0181MSW_")
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(3039578829):Inject(target.Name, "1XZ8YWN27NZ0282N10A0181MSW_")
+				end
+			end
+	end)
+
+addcmd('Brokenangel' , "BrokenAngel (plr) | Loads Broken Angel on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("BrokenAngel").load("Pristh_Script", LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("BrokenAngel").load("Pristh_Script", v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("BrokenAngel").load("Pristh_Script", v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("Brokenangel").load("Pristh_Script", target.Name)
+				end
+			end
+end)
+
+addcmd('Pharaoh' , "Pharaoh (plr) | Loads Pharaoh on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("Pharaoh").load("Pristh_Script", LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("Pharaoh").load("Pristh_Script", v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("Pharaoh").load("Pristh_Script", v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("Pharaoh").load("Pristh_Script", target.Name)
+				end
+			end
+end)
+
+addcmd('Memeus' , "Memeus (plr) | Lets a (plr) do animations",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("Memeus").load("Pristh_Script", LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("Memeus").load("Pristh_Script", v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("Memeus").load("Pristh_Script", v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("Memeus").load("Pristh_Script", target.Name)
+				end
+			end
+		end)
+	
+	
+	addcmd('Xester' , "Xester (plr) | Loads Xester on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("Xester").load("Pristh_Script", LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("Xester").load("Pristh_Script", v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("Xester").load("Pristh_Script", v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("Xester").load("Pristh_Script", target.Name)
+				end
+			end
+	end)
+
+		addcmd('BlindReaper' , "BlindReaper (plr) | Loads Blind Reaper on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("Blindreaper").load("Pristh_Script",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("Blindreaper").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("Blindreaper").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("Blindreaper").load("Pristh_Script",target.Name)
+				end
+			end
+		end)
+		
+		addcmd('ServerAdmin' , "ServerAdmin (plr) | Loads Server Admin on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(3051351153):executeScript(LP.Name, ":")
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(3051351153):executeScript(v.Name, ":")
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(3051351153):executeScript(v.Name, ":")
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(3051351153):executeScript(target.Name, ":")
+				end
+			end
+		end)
+		
+		addcmd('Occidendum' , "Occidendum (plr) | Loads Occidendum on (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(3051366030):executeScript(LP.Name, ":")
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(3051366030):executeScript(v.Name, ":")
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(3051366030):executeScript(v.Name, ":")
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(3051366030):executeScript(target.Name, ":")
+				end
+			end
+		end)
+		
+		addcmd('CubeBuster' , "CubeBuster (plr) | Loads Cube Buster on (plr) ",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("CubeBuster").load("Pristh_Script",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("CubeBuster").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("CubeBuster").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("CubeBuster").load("Pristh_Script",target.Name)
+				end
+			end
+		end)
+		
+		addcmd('Chronos' , "Chronos (plr) | Loads Chronos on (plr) ",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2927194773).load("Chronos").load("Pristh_Script",LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2927194773).load("Chronos").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2927194773).load("Chronos").load("Pristh_Script",v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+					require(2927194773).load("Chronos").load("Pristh_Script",target.Name)
+				end
+			end
+		end)
+	
+	addcmd('R6' , "R6 (plr) | Changes plr from R15 to R6 (plr)",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						require(2900282333).load(LP.Name)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								require(2900282333).load(v.Name)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								require(2900282333).load(v.Name)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+								require(2900282333).load(target.Name)
+				end
+			end
+			end)
+			
+			
+			addcmd('Kohlowner' , "Kohlowner (plr) | Gives (plr) Kohl's owner",
+		function(args)
+			local t = args[2]
+			if not t then
+				return
+			else
+				if string.lower(t) == 'me' then
+					if LP.Character then
+						_G.setPower:Fire(LP.UserId, -5)
+					end
+				elseif string.lower(t) == 'other' or string.lower(t) == 'others' then
+					for _,v in pairs(Players:GetPlayers()) do
+						if v.Name ~= LP.Name then
+							if v.Character then
+								_G.setPower:Fire(v.UserId, -5)
+							end
+						end
+					end
+				elseif string.lower(t) == 'all' then
+					for _,v in pairs(Players:GetPlayers()) do
+							if v.Character then
+								_G.setPower:Fire(v.UserId, -5)
+							end
+						end
+					end
+				end
+		
+				local target = shortName(t)
+				if target ~= nil then
+					if target.Character then
+								_G.setPower:Fire(target.UserId, -5)
+				end
+			end
+			end)
+			
+	local function splitString(str,delim)
+		local broken = {}
+		if delim == nil then delim = "," end
+		for w in string.gmatch(str,"[^"..delim.."]+") do
+			table.insert(broken,w)
+		end
+		return broken
+	end
+
+	local function findCmd(cmd_name)
+    	for i,v in pairs(commands)do
+        	if v.NAME:lower() == cmd_name:lower() then
+            	return v
+       		end
+    	end
+	end
+
+	local function execcmd(command)
+		local args = splitString(command, split)
+		if args[1] == nil then return end
+		local cmd = findCmd(args[1])
+		if cmd then
+			cmd.FUNC(args)
+		end
+	end
+
+	local function ohok(player, args1)
+		LP = player
+		BarText = args1
+		if args1 == "getCMDS" then
+			return commands
+		else
+			execcmd(args1)
+		end
+		
+	end
+
+		Admin.OnServerInvoke = ohok
+		
+	end
+		
+	Players.PlayerAdded:Connect(function(plr)
+		for i = 1, #bans do
+			local id = bans[i]
+			if id == plr.Name then
+				return plr:Kick("You have been banned from the server.")
+			end
+		end
+		for i = 1, #crashbans do
+			local id = crashbans[i]
+			if id == plr.Name then
+				return plr:Kick("You have been banned from the server.")
+			end
+		end
+	end)
+end
+	
+
+return module
