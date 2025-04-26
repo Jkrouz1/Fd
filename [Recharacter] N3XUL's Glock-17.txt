@@ -4,7 +4,7 @@ local oldenv = getfenv(f)
 local newenv = setmetatable({}, {
 __index = function(_, k)
 if k:lower() == 'script' then
-return scri
+return script
 else
 return oldenv[k]
 end
