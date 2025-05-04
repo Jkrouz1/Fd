@@ -1,4 +1,9 @@
--- idk who made this but credit the owner of this script (re-edited).
+-- idk who made this but credit the owner of this script (re-edited) and (re-translated) Some dialogs maybe not the same also this is not fully a Spectrum Glitcher this is only Spectrum Glitcher that i can find
+
+print("-----Normal Modes-----\nQ = MAYHEM\nE = PURITY\nR = CORRUPTED\nT = CHAOS\nY = DIVINITY\nU = EQUINOX\nF = DESTINY\nG = INFESTATION\n ----------")
+print("-----Skills-----\nMayhem=Z\nPurity=Z\nCorrupted=Z\nChaos=Z\nDivinity=Z\nEquinox=Z\nFallenx=Z,X\nMayhem=X\n----------")
+print("-----Combination Skills-----\nINFESTATION + M = PLAGUE\nMAYHEM + N = ARCANAS\nPURITY + N = SHD\nINFESTATION + N = NUCLEAR\nCHAOS + N = CRAZED\nDESTINY + N = FALLENX\n---------")
+print("Others\nP = Toggle Glitcher Name\nI = Toggle Music")
 
 Player = game.Players.LocalPlayer
 Mouse = Player:GetMouse()
@@ -291,9 +296,9 @@ print(name.." ".."SPECTRUM/"..name..".mp3")
 kan:Stop()
 if readfile("SPECTRUM/"..name..".mp3") then
 kan.SoundId=getcustomasset("SPECTRUM/"..name..".mp3")
---kan.TimePosition=timepos
---kan.Pitch=pitch
---kan.Volume=vol
+kan.TimePosition=timepos
+kan.Pitch=pitch
+kan.Volume=vol
 kan.Volume=1
 kan:Play()
 print("FOUND SONG FOR: "..name)
@@ -5576,11 +5581,11 @@ hum.WalkSpeed = 0
 sphere(3,"Add",root.CFrame,vt(0,0,0),0.25,BrickColor.new("Really red"))
 local radm = math.random(1,3)
 if radm == 1 then
-bosschatfunc("VOÇE NAO SERA NECCESARIO.",MAINRUINCOLOR.Color,2)
+bosschatfunc("YOU WILL NOT BE NECESSARY.",MAINRUINCOLOR.Color,2)
 elseif radm == 2 then
-bosschatfunc("SUA EXISTENCIA JA ERAAA.",MAINRUINCOLOR.Color,2)
+bosschatfunc("YOUR EXISTENCE IS ALREADY OVER.",MAINRUINCOLOR.Color,2)
 elseif radm == 3 then
-bosschatfunc("SOFRA!",MAINRUINCOLOR.Color,2)
+Bosschatfunc("SUFFER!",MAINRUINCOLOR.Color,2)
 end
 for i = 0,2,0.1 do
 swait()
@@ -5829,7 +5834,7 @@ end
 function EndGROUND()
 	attack = true
 hum.WalkSpeed = 0
-bosschatfunc("ISSO E ISSO",MAINRUINCOLOR.Color,1)
+bosschatfunc("THIS AND THIS!",MAINRUINCOLOR.Color,1)
 CFuncs["Sound"].Create("rbxassetid://838392947", root, 10, 1)
 CFuncs["Sound"].Create("rbxassetid://1368598393", root, 10, 1)
 CFuncs["EchoSound"].Create("rbxassetid://1690475123", char, 1.5, 1,0,10,0.15,0.5,1)
@@ -5926,11 +5931,11 @@ hum.WalkSpeed = 2
 local keptcolor = MAINRUINCOLOR
 local radm = math.random(1,3)
 if radm == 1 then
-bosschatfunc("Don'AHAHHAAHAHA .",MAINRUINCOLOR.Color,1)
+bosschatfunc("HAHAHAHAHA!",MAINRUINCOLOR.Color,1)
 elseif radm == 2 then
-bosschatfunc("DISCOS DA ETERNIDADE",MAINRUINCOLOR.Color,1)
+bosschatfunc("DISCS OF ETERNITY",MAINRUINCOLOR.Color,1)
 elseif radm == 3 then
-bosschatfunc("PEGUE ISTO!",MAINRUINCOLOR.Color,1)
+bosschatfunc("TAKE THIS!",MAINRUINCOLOR.Color,1)
 end
 CFuncs["Sound"].Create("rbxassetid://847061203", root, 2, 1)
 CFuncs["EchoSound"].Create("rbxassetid://1625448638", root, 4, 1,0,10,0.15,0.5,1)
@@ -6135,7 +6140,7 @@ hum.WalkSpeed = 0
 CFuncs["Sound"].Create("rbxassetid://1368598393", char, 2.5, 0.5)
 CFuncs["Sound"].Create("rbxassetid://1368598393", root, 10, 0.5)
 CFuncs["EchoSound"].Create("rbxassetid://1718412034", char, 4, 1,0,10,0.15,0.5,1)
-bosschatfunc("MORRAAA!",MAINRUINCOLOR.Color,2)
+bosschatfunc("DIEEE!",MAINRUINCOLOR.Color,2)
 local keptcolor = MAINRUINCOLOR
 for i = 0,8,0.1 do
 swait()
@@ -6240,11 +6245,11 @@ CFuncs["EchoSound"].Create("rbxassetid://1448033299", char, 1.5, 1,0,10,0.15,0.5
 CFuncs["EchoSound"].Create("rbxassetid://1448033299", root, 10, 1,0,10,0.15,0.5,1)
 local radm = math.random(1,3)
 if radm == 1 then
-bosschatfunc("ThISSO NAO VAI SER FACIL PRA VOÇE HAHAHAAHAHA.",MAINRUINCOLOR.Color,1)
+bosschatfunc("THIS WILL NOT BE EASY FOR YOU HAHAHAAHAHA.",MAINRUINCOLOR.Color,1)
 elseif radm == 2 then
-bosschatfunc("esqueceu disso??",MAINRUINCOLOR.Color,1)
+bosschatfunc("forgot about that???",MAINRUINCOLOR.Color,1)
 elseif radm == 3 then
-bosschatfunc("AVISO!",MAINRUINCOLOR.Color,1)
+bosschatfunc("NOTICE!",MAINRUINCOLOR.Color,1)
 end
 coroutine.resume(coroutine.create(function()
 for i = 0, 29 do
@@ -6483,7 +6488,7 @@ function FallenDEMISE()
 attack = true
 hum.WalkSpeed = 0
 local keptcolor = MAINRUINCOLOR
-bosschatfunc("TODA SUA EXISTENCIA JA ERA.",MAINRUINCOLOR.Color,3)
+bosschatfunc("YOUR ENTIRE EXISTENCE IS ALREADY GONE.",MAINRUINCOLOR.Color,3)
 CFuncs["Sound"].Create("rbxassetid://289315275", char, 2.5,0.75)
 CFuncs["Sound"].Create("rbxassetid://136007472", char, 2,0.5)
 for i = 0, 15, 0.1 do
@@ -6657,7 +6662,7 @@ newTheme("rbxassetid://1347011178",0,1.01,1.25)
 MAINRUINCOLOR = BrickColor.new("White")
 RecolorThing(MAINRUINCOLOR,BrickColor.new("Really black"),MAINRUINCOLOR,MAINRUINCOLOR,MAINRUINCOLOR,1,MAINRUINCOLOR,1,MAINRUINCOLOR,true)
 end
-if k == "8" and attack == false and ModeOfGlitch ~= 8 then
+if k == "F" and attack == false and ModeOfGlitch ~= 8 then
                ModeOfGlitch = 8
 storehumanoidWS = 140
 hum.WalkSpeed = 140
@@ -6685,7 +6690,7 @@ storehumanoidWS = 180
 hum.WalkSpeed = 180
 rainbowmode = false
 chaosmode = false
-RecolorTextAndRename("ESPAÇO TEMPO",BrickColor.new("Alder").Color,BrickColor.new("Lilac").Color,"Antique")
+RecolorTextAndRename("PLAGUE",BrickColor.new("Alder").Color,BrickColor.new("Lilac").Color,"Antique")
 newTheme("rbxassetid://1359036559",0,1.01,1.25)
 MAINRUINCOLOR = BrickColor.new("Lilac")
 RecolorThing(MAINRUINCOLOR,BrickColor.new("Alder"),MAINRUINCOLOR,MAINRUINCOLOR,MAINRUINCOLOR,1,MAINRUINCOLOR,1,MAINRUINCOLOR,true)
@@ -6696,7 +6701,7 @@ storehumanoidWS = 275
 hum.WalkSpeed = 275
 rainbowmode = false
 chaosmode = false
-RecolorTextAndRename("VIROSE",Color3.new(0.25,0,0.1),BrickColor.new("Hot pink").Color,"Antique")
+RecolorTextAndRename("ARCANAS",Color3.new(0.25,0,0.1),BrickColor.new("Hot pink").Color,"Antique")
 newTheme("rbxassetid://582020393",0,1.005,1.25)
 MAINRUINCOLOR = BrickColor.new("Hot pink")
 RecolorThing(MAINRUINCOLOR,MAINRUINCOLOR,MAINRUINCOLOR,MAINRUINCOLOR,MAINRUINCOLOR,1,MAINRUINCOLOR,1,MAINRUINCOLOR,true)
@@ -6707,7 +6712,7 @@ storehumanoidWS = 225
 hum.WalkSpeed = 225
 rainbowmode = false
 chaosmode = false
-RecolorTextAndRename("LUZ",Color3.new(0.75,0.9,1),BrickColor.new("Pink").Color,"Arcade")
+RecolorTextAndRename("SHD",Color3.new(0.75,0.9,1),BrickColor.new("Pink").Color,"Arcade")
 newTheme("rbxassetid://363284685",0,1.01,1.25)
 MAINRUINCOLOR = BrickColor.new("Baby blue")
 RecolorThing(MAINRUINCOLOR,BrickColor.new("Pink"),MAINRUINCOLOR,MAINRUINCOLOR,MAINRUINCOLOR,1,MAINRUINCOLOR,1,MAINRUINCOLOR,true)
@@ -6718,7 +6723,7 @@ storehumanoidWS = 300
 hum.WalkSpeed = 300
 rainbowmode = false
 chaosmode = false
-RecolorTextAndRename("DESTROYED",BrickColor.new("Really black").Color,BrickColor.new("Bright bluish green").Color,"SciFi")
+RecolorTextAndRename("NUCLEAR",BrickColor.new("Really black").Color,BrickColor.new("Bright bluish green").Color,"SciFi")
 newTheme("rbxassetid://643309199",0,1.01,1.25)
 MAINRUINCOLOR = BrickColor.new("Bright bluish green")
 RecolorThing(MAINRUINCOLOR,BrickColor.new("Really black"),MAINRUINCOLOR,MAINRUINCOLOR,MAINRUINCOLOR,1,MAINRUINCOLOR,1,MAINRUINCOLOR,true)
@@ -6729,7 +6734,7 @@ storehumanoidWS = 500
 hum.WalkSpeed = 500
 rainbowmode = false
 chaosmode = false
-RecolorTextAndRename("Mayhem",BrickColor.new("Really black").Color,BrickColor.new("Navy blue").Color,"Code")
+RecolorTextAndRename("CRAZED",BrickColor.new("Really black").Color,BrickColor.new("Navy blue").Color,"Code")
 newTheme("rbxassetid://719008519",0,1.02,1.25)
 MAINRUINCOLOR = BrickColor.new("Navy blue")
 RecolorThing(MAINRUINCOLOR,BrickColor.new("Really black"),MAINRUINCOLOR,MAINRUINCOLOR,MAINRUINCOLOR,1,MAINRUINCOLOR,1,MAINRUINCOLOR,true)
@@ -6740,7 +6745,7 @@ storehumanoidWS = 250
 hum.WalkSpeed = 250
 rainbowmode = false
 chaosmode = false
-RecolorTextAndRename("HEROI CAIDO",Color3.new(0.5,1,1),BrickColor.new("Deep orange").Color,"Antique")
+RecolorTextAndRename("FALLENX",Color3.new(0.5,1,1),BrickColor.new("Deep orange").Color,"Antique")
 newTheme("rbxassetid://1505487022",0,1.01,1.25)
 MAINRUINCOLOR = BrickColor.new("Pastel green")
 RecolorThing(MAINRUINCOLOR,MAINRUINCOLOR,MAINRUINCOLOR,MAINRUINCOLOR,MAINRUINCOLOR,1,MAINRUINCOLOR,1,MAINRUINCOLOR,true)
