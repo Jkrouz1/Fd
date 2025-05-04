@@ -589,7 +589,7 @@ function bosschatfunc(text,color,watval)
 	txtlb.TextXAlignment = "Left"
 	txtlb.Position = UDim2.new(0,0,0.75 + 1,0)
 	local txtlb2 = Instance.new("TextLabel",scrg)
-	txtlb2.Text = modet.Text.." Player.name:"
+	txtlb2.Text = modet.Text .. " " .. Player.Name .. ":"
 	txtlb2.Font = "Arcade"
 	txtlb2.TextColor3 = Color3.new(0,0,0)
 	txtlb2.TextStrokeTransparency = 0
