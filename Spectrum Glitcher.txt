@@ -1,8 +1,9 @@
+-- Some functions in this script is broken and i will not fix it until i want.
 -- idk who made this but credit the owner of this script (re-edited) and (re-translated) Some dialogs maybe not the same also this is not fully a Spectrum Glitcher this is only Spectrum Glitcher that i can find
 
 print("-----Normal Modes-----\nQ = MAYHEM\nE = PURITY\nR = CORRUPTED\nT = CHAOS\nY = DIVINITY\nU = EQUINOX\nF = DESTINY\nG = INFESTATION\n ----------")
 print("-----Skills-----\nMayhem=Z\nPurity=Z\nCorrupted=Z\nChaos=Z\nDivinity=Z\nEquinox=Z\nFallenx=Z,X\nMayhem=X\n----------")
-print("-----Combination Skills-----\nINFESTATION + M = PLAGUE\nMAYHEM + N = ARCANAS\nPURITY + N = SHD\nINFESTATION + N = NUCLEAR\nCHAOS + N = CRAZED\nDESTINY + N = FALLENX\n---------")
+print("-----Combination Skills-----\nDESTINY + M = PLAGUE\nMAYHEM + N = ARCANAS\nPURITY + N = SHD\nINFESTATION + N = NUCLEAR\nCHAOS + N = CRAZED\nDIVINITY + N = FALLENX\n---------")
 print("Others\nP = Toggle Glitcher Name\nI = Toggle Music")
 
 Player = game.Players.LocalPlayer
@@ -588,7 +589,7 @@ function bosschatfunc(text,color,watval)
 	txtlb.TextXAlignment = "Left"
 	txtlb.Position = UDim2.new(0,0,0.75 + 1,0)
 	local txtlb2 = Instance.new("TextLabel",scrg)
-	txtlb2.Text = modet.Text.." KJ_32261:"
+	txtlb2.Text = modet.Text.." Player.name:"
 	txtlb2.Font = "Arcade"
 	txtlb2.TextColor3 = Color3.new(0,0,0)
 	txtlb2.TextStrokeTransparency = 0
