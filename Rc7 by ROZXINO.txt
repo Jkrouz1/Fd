@@ -92,7 +92,7 @@ submit.MouseButton1Down:connect(function()
 		passpage.Visible = false
 		mainpage.Visible = true
 	else
-		pass.Text = "Wrong Password!"
+		pass.Text = "Try Rozxino"
 		wait(2)
 		pass.Text = ""
 	end
@@ -121,7 +121,7 @@ pass.BorderSizePixel = 0
 pass.Position = UDim2.new(0.261000007, 0, 0.479999989, 0)
 pass.Size = UDim2.new(0, 160, 0, 21)
 pass.Font = Enum.Font.SourceSans
-pass.Text = ""
+pass.Text = "Rozxino"
 pass.TextColor3 = Color3.fromRGB(20, 212, 255)
 pass.TextSize = 14.000
 pass.TextWrapped = true
