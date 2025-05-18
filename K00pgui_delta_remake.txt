@@ -711,7 +711,7 @@ local function FAFX_fake_script() -- Shutdown.Script
 
 	script.Parent.MouseButton1Down:connect(function()
 		for i, players in pairs(game.Players:GetChildren()) do
-			players:Kick("fak u")
+			print("fak u")
 		end
 	end)
 	
